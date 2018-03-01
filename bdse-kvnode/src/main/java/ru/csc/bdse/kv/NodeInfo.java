@@ -11,18 +11,15 @@ import java.util.Objects;
  */
 public class NodeInfo {
 
-    private String name;
-    private NodeStatus status;
+    private final String name;
+    private final NodeStatus status;
 
-    public NodeInfo(String name, NodeStatus status) {
+    NodeInfo(String name, NodeStatus status) {
         Require.nonNull(name, "null name");
         Require.nonNull(status, "null status");
 
         this.name = name;
         this.status = status;
-    }
-
-    private NodeInfo() {
     }
 
     public String getName() {

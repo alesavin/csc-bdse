@@ -1,6 +1,7 @@
 package ru.csc.bdse.kv;
 
 import org.assertj.core.api.SoftAssertions;
+import org.junit.Before;
 import org.junit.Test;
 import ru.csc.bdse.util.Constants;
 import ru.csc.bdse.util.Random;
@@ -19,7 +20,12 @@ public abstract class AbstractKeyValueApiTest {
 
     protected abstract KeyValueApi newKeyValueApi();
 
-    private KeyValueApi api = newKeyValueApi();
+    private KeyValueApi api;
+
+    @Before
+    public void setUp() throws Exception {
+        api = newKeyValueApi();
+    }
 
     @Test
     public void createValue() {
