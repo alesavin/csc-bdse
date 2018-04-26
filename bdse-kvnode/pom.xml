@@ -9,4 +9,5 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>bdse-kvnode</artifactId>
+    <version>0.0.2-SNAPSHOT</version>
 </project>

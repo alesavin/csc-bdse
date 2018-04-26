@@ -1,7 +1,9 @@
 package ru.csc.bdse.kv;
 
 import org.assertj.core.api.SoftAssertions;
+import org.junit.Ignore;
 import org.junit.Test;
+import ru.csc.bdse.model.KeyValueRecord;
 import ru.csc.bdse.util.Constants;
 import ru.csc.bdse.util.Random;
 
@@ -28,12 +30,12 @@ public abstract class AbstractKeyValueApiTest {
         String key = Random.nextKey();
         byte[] value = Random.nextValue();
 
-        Optional<byte[]> oldValue = api.get(key);
+        Optional<KeyValueRecord> oldValue = api.get(key);
         softAssert.assertThat(oldValue.isPresent()).as("old value").isFalse();
 
         api.put(key, value);
-        byte[] newValue = api.get(key).orElse(Constants.EMPTY_BYTE_ARRAY);
-        assertThat(newValue).as("new value").isEqualTo(value);
+        KeyValueRecord newValue = api.get(key).orElse(null);
+        assertThat(newValue.getData()).as("new value").isEqualTo(value);
 
         softAssert.assertAll();
     }
@@ -47,12 +49,12 @@ public abstract class AbstractKeyValueApiTest {
         byte[] newValue = Random.nextValue();
 
         api.put(key, oldValue);
-        byte[] actualOldValue = api.get(key).orElse(Constants.EMPTY_BYTE_ARRAY);
-        softAssert.assertThat(actualOldValue).as("old value").isEqualTo(oldValue);
+        KeyValueRecord actualOldValue = api.get(key).orElse(null);
+        softAssert.assertThat(actualOldValue.getData()).as("old value").isEqualTo(oldValue);
 
         api.put(key, newValue);
-        byte[] actualNewValue = api.get(key).orElse(Constants.EMPTY_BYTE_ARRAY);
-        softAssert.assertThat(actualNewValue).as("new value").isEqualTo(newValue);
+        KeyValueRecord actualNewValue = api.get(key).orElse(null);
+        softAssert.assertThat(actualNewValue.getData()).as("new value").isEqualTo(newValue);
 
         softAssert.assertAll();
     }
@@ -65,12 +67,12 @@ public abstract class AbstractKeyValueApiTest {
         byte[] value = Random.nextValue();
 
         api.put(key, value);
-        byte[] actualOldValue = api.get(key).orElse(Constants.EMPTY_BYTE_ARRAY);
-        softAssert.assertThat(actualOldValue).as("old value").isEqualTo(value);
+        KeyValueRecord actualOldValue = api.get(key).orElse(null);
+        softAssert.assertThat(actualOldValue.getData()).as("old value").isEqualTo(value);
 
         api.delete(key);
-        Optional<byte[]> actualNewValue = api.get(key);
-        softAssert.assertThat(actualNewValue.isPresent()).as("new value").isFalse();
+        Optional<KeyValueRecord> actualNewValue = api.get(key);
+        softAssert.assertThat(actualNewValue.isPresent() && !actualNewValue.get().isDeleted()).as("new value").isFalse();
 
         softAssert.assertAll();
     }
@@ -80,12 +82,12 @@ public abstract class AbstractKeyValueApiTest {
         SoftAssertions softAssert = new SoftAssertions();
 
         String nonexistentKey = Random.nextKey();
-        Optional<byte[]> actualOldValue = api.get(nonexistentKey);
-        softAssert.assertThat(actualOldValue.isPresent()).as("old value").isFalse();
+        Optional<KeyValueRecord> actualOldValue = api.get(nonexistentKey);
+        softAssert.assertThat(actualOldValue.isPresent() && !actualOldValue.get().isDeleted()).as("old value").isFalse();
 
         api.delete(nonexistentKey);
-        Optional<byte[]> actualNewValue = api.get(nonexistentKey);
-        softAssert.assertThat(actualNewValue.isPresent()).as("new value").isFalse();
+        Optional<KeyValueRecord> actualNewValue = api.get(nonexistentKey);
+        softAssert.assertThat(actualNewValue.isPresent() && !actualNewValue.get().isDeleted()).as("new value").isFalse();
 
         softAssert.assertAll();
     }

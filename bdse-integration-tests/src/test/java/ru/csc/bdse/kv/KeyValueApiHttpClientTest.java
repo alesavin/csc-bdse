@@ -18,16 +18,16 @@ public class KeyValueApiHttpClientTest extends AbstractKeyValueApiTest {
     @ClassRule
     public static final GenericContainer node = new GenericContainer(
             new ImageFromDockerfile()
-                    .withFileFromFile("target/bdse-kvnode-0.0.1-SNAPSHOT.jar", new File
-                            ("../bdse-kvnode/target/bdse-kvnode-0.0.1-SNAPSHOT.jar"))
+                    .withFileFromFile("target/bdse-kvnode-0.0.2-SNAPSHOT.jar", new File
+                            ("../bdse-kvnode/target/bdse-kvnode-0.0.2-SNAPSHOT.jar"))
                     .withFileFromClasspath("Dockerfile", "kvnode/Dockerfile"))
             .withEnv(Env.KVNODE_NAME, "node-0")
-            .withExposedPorts(8080)
+            .withExposedPorts(8001)
             .withStartupTimeout(Duration.of(30, SECONDS));
 
     @Override
     protected KeyValueApi newKeyValueApi() {
-        final String baseUrl = "http://localhost:" + node.getMappedPort(8080);
+        final String baseUrl = "http://localhost:" + node.getMappedPort(8001);
         return new KeyValueApiHttpClient(baseUrl);
     }
 }

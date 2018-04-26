@@ -1,0 +1,15 @@
+syntax = "proto2";
+
+option java_outer_classname = "RecordBookProtos";
+
+message Person {
+    required string firstName = 1;
+    required string secondName = 2;
+    optional string nickname = 3;
+
+    repeated string phones = 4;
+}
+
+message AddressBook {
+    repeated Person people = 1;
+}

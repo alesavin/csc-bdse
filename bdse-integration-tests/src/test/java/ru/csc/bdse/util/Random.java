@@ -18,4 +18,8 @@ public class Random {
     public static byte[] nextValue() {
         return nextKey().getBytes();
     }
+
+    public static char nextChar() {
+        return (char)(random.nextInt(26) + 'a');
+    }
 }

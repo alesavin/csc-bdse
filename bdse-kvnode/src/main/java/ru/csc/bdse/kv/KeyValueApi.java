@@ -1,5 +1,7 @@
 package ru.csc.bdse.kv;
 
+import ru.csc.bdse.model.KeyValueRecord;
+
 import java.util.Optional;
 import java.util.Set;
 
@@ -11,12 +13,12 @@ public interface KeyValueApi {
     /**
      * Puts value to the storage by specified key.
      */
-    void put(String key, byte[] value);
+    String put(String key, byte[] value);
 
     /**
      * Returns value associated with specified key.
      */
-    Optional<byte[]> get(String key);
+    Optional<KeyValueRecord> get(String key);
 
     /**
      * Returns all keys with specified prefix.

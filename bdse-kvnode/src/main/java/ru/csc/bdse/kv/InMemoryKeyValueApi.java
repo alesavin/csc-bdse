@@ -1,5 +1,6 @@
 package ru.csc.bdse.kv;
 
+import ru.csc.bdse.model.KeyValueRecord;
 import ru.csc.bdse.util.Require;
 
 import java.util.Collections;
@@ -25,16 +26,21 @@ public class InMemoryKeyValueApi implements KeyValueApi {
     }
 
     @Override
-    public void put(final String key, final byte[] value) {
+    public String put(final String key, final byte[] value) {
         Require.nonEmpty(key, "empty key");
         Require.nonNull(value, "null value");
         map.put(key, value);
+
+        return "COMMIT";
     }
 
     @Override
-    public Optional<byte[]> get(final String key) {
+    public Optional<KeyValueRecord> get(final String key) {
         Require.nonEmpty(key, "empty key");
-        return Optional.ofNullable(map.get(key));
+        if (map.containsKey(key)) {
+            return Optional.of(new KeyValueRecord(key, map.get(key)));
+        }
+        return Optional.empty();
     }
 
     @Override

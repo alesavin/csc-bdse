@@ -33,6 +33,10 @@ public class NodeInfo {
         return status;
     }
 
+    public void setStatus(NodeStatus nodeStatus) {
+        this.status = nodeStatus;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

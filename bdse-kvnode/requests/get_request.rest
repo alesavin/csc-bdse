@@ -1,0 +1,23 @@
+GET
+http://localhost:8001/key-value/smt
+
+%%%
+
+# Duration: 15854 ms
+# URL: http://localhost:8001/key-value/smt
+
+# HTTP/1.1 500
+
+@Content-Type: application/json;charset=UTF-8
+@Transfer-Encoding: chunked
+@Date: Sun, 01 Apr 2018 12:32:11 GMT
+@Connection: close
+
+{
+  "timestamp": 1522585931648,
+  "status": 500,
+  "error": "Internal Server Error",
+  "exception": "java.lang.IllegalStateException",
+  "message": "No message available",
+  "path": "/key-value/smt"
+}
